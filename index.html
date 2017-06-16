@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name ="description" content="">
+    <meta name="author" content="Our Code World">
+    <title></title>
+    <script src="artyom.js"></script>
+    <script src="artyom.min.js"></script>
+  </head>
+  <body>
+
+    <div>
+      <input type="button" onclick="startArtyom()" value="Start voice commands"/><br>
+      <input type="button" onclick="stopArtyom()" value="Stop listening"/><br>
+      <span id="output" style="font-size:20px; color:red;"></span><br>
+      <span id="time" style="font-size:35px; color:blue;"></span><br>
+
+      <span style="color:;blue;"> The loaded comands are : </span><br>
+
+    </div>
+    <script>
+
+      artyom.addCommands([
+        {
+          description: "blah blah blah",
+          indexes:["hello","hey"],
+          action:function(i){
+            if(i==0){
+              artyom.say("Hello! How are you?");
+            }
+          }
+        },
+        {
+          indexes:["goodbye"],
+          action:function(){
+            alert("Now all is over.");
+          }
+        }
+      ]);
+      artyom.redirectRecognizedTextOutput(function(text,isFinal){
+        var span = document.getElementById('output');
+        if(isFinal){
+          span.innerHTML = '';
+        }else{
+          span.innerHTML = text;
+        }
+      });
+
+      function startArtyom(){
+        artyom.initialize({
+          lang:"en-GB",
+          continuous: false,
+          debug:true,
+          listen:true
+        });
+      }
+      function stopArtyom(){
+        artyom.fatality();
+      }
+    </script>
+
+  </body>
+</html>
